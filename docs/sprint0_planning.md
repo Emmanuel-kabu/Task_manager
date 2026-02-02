@@ -50,3 +50,19 @@ All user stories follow the standard format: **As a [role], I want [action], so 
 - **Role**: As a user (or operations team)
 - **Action**: I want to check if the service is running
 - **Value**: So that I can verify the API is healthy before making requests
+
+---
+
+## 3. Acceptance Criteria
+
+### US1 — Create a Task
+- **Given** a valid JSON payload with `title` (required) and optional `description`,
+- **When** I send a POST request to `/tasks`,
+- **Then** a new task is created with a unique `id`, `status` defaults to `"pending"`, and the response returns `201 Created` with the task JSON.
+- **And** if `title` is missing or empty, the API returns `400 Bad Request` with an error message.
+
+### US2 — View All Tasks
+- **Given** tasks exist in the system,
+- **When** I send a GET request to `/tasks`,
+- **Then** the API returns `200 OK` with a JSON array of all tasks.
+- **And** if no tasks exist, the API returns `200 OK` with an empty array `[]`.
