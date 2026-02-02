@@ -66,3 +66,16 @@ All user stories follow the standard format: **As a [role], I want [action], so 
 - **When** I send a GET request to `/tasks`,
 - **Then** the API returns `200 OK` with a JSON array of all tasks.
 - **And** if no tasks exist, the API returns `200 OK` with an empty array `[]`.
+
+### US3 — Update a Task
+- **Given** a task with a known `id` exists,
+- **When** I send a PUT request to `/tasks/<id>` with updated fields (`title`, `description`, or `status`),
+- **Then** the task is updated and the API returns `200 OK` with the updated task JSON.
+- **And** if the task `id` does not exist, the API returns `404 Not Found`.
+- **And** `status` must be one of `"pending"`, `"in-progress"`, or `"done"`.
+
+### US4 — Delete a Task
+- **Given** a task with a known `id` exists,
+- **When** I send a DELETE request to `/tasks/<id>`,
+- **Then** the task is removed and the API returns `200 OK` with a confirmation message.
+- **And** if the task `id` does not exist, the API returns `404 Not Found`.
