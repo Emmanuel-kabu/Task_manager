@@ -79,3 +79,14 @@ All user stories follow the standard format: **As a [role], I want [action], so 
 - **When** I send a DELETE request to `/tasks/<id>`,
 - **Then** the task is removed and the API returns `200 OK` with a confirmation message.
 - **And** if the task `id` does not exist, the API returns `404 Not Found`.
+
+### US5 — Filter Tasks by Status
+- **Given** tasks exist with various statuses,
+- **When** I send a GET request to `/tasks?status=done`,
+- **Then** the API returns `200 OK` with only the tasks matching that status.
+- **And** if the status value is invalid, the API returns `400 Bad Request`.
+
+### US6 — Health Check
+- **Given** the service is running,
+- **When** I send a GET request to `/health`,
+- **Then** the API returns `200 OK` with `{"status": "healthy", "timestamp": "<ISO-8601>", "task_count": <int>}`.
