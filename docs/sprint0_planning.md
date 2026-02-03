@@ -90,3 +90,16 @@ All user stories follow the standard format: **As a [role], I want [action], so 
 - **Given** the service is running,
 - **When** I send a GET request to `/health`,
 - **Then** the API returns `200 OK` with `{"status": "healthy", "timestamp": "<ISO-8601>", "task_count": <int>}`.
+
+---
+
+## 4. Definition of Done (DoD)
+
+A user story is considered **Done** when ALL of the following are met:
+
+1. **Code Complete**: Feature code is written and implements all acceptance criteria.
+2. **Tests Written**: Unit tests cover the feature and all pass.
+3. **CI Pipeline Passes**: The code passes linting and all tests in the CI/CD pipeline.
+4. **Code Committed**: Changes are committed to the `main` branch with clear, descriptive commit messages.
+5. **Documentation Updated**: Any relevant docs (README, API docs) are updated.
+6. **Peer-Reviewable**: Code is clean, readable, and follows project conventions.
