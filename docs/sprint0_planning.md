@@ -126,3 +126,17 @@ A user story is considered **Done** when ALL of the following are met:
 - Write unit tests for all endpoints
 - Set up GitHub Actions CI pipeline
 - Conduct Sprint Review and Retrospective
+
+---
+
+## 6. Sprint 2 Plan (Tentative)
+
+**Sprint Goal**: Add delete and filter functionality, implement monitoring/logging, and apply Sprint 1 retrospective improvements.
+
+| Story | Story Points |
+|-------|-------------|
+| US4 — Delete a Task | 2 |
+| US5 — Filter Tasks by Status | 3 |
+| US6 — Health Check | 1 |
+
+**Total Planned Points**: 6
