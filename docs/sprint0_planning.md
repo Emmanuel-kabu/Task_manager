@@ -103,3 +103,26 @@ A user story is considered **Done** when ALL of the following are met:
 4. **Code Committed**: Changes are committed to the `main` branch with clear, descriptive commit messages.
 5. **Documentation Updated**: Any relevant docs (README, API docs) are updated.
 6. **Peer-Reviewable**: Code is clean, readable, and follows project conventions.
+
+---
+
+## 5. Sprint 1 Plan
+
+**Sprint Goal**: Deliver the core task creation and viewing functionality, and establish the CI/CD pipeline.
+
+| Story | Story Points |
+|-------|-------------|
+| US1 — Create a Task | 3 |
+| US2 — View All Tasks | 2 |
+| US3 — Update a Task | 3 |
+
+**Total Planned Points**: 8
+
+**Key Activities**:
+- Set up project structure (Flask app, requirements, tests directory)
+- Implement POST `/tasks` endpoint (US1)
+- Implement GET `/tasks` endpoint (US2)
+- Implement PUT `/tasks/<id>` endpoint (US3)
+- Write unit tests for all endpoints
+- Set up GitHub Actions CI pipeline
+- Conduct Sprint Review and Retrospective
