@@ -25,18 +25,18 @@ def create_task():
     Value: So that I can track things I need to do
 
     Expects JSON: {"title": "...", "description": "..."}
-    Returns: 201 Created with task JSON, or 400 if title missing.
+    Returns: 201 Created with task JSON, or 400 if title missing/empty.
     """
     data = request.get_json()
 
-    if not data or "title" not in data:
+    if not data or "title" not in data or not data["title"].strip():
         return jsonify({"error": "Title is required"}), 400
 
     task_id = str(uuid.uuid4())
     task = {
         "id": task_id,
-        "title": data["title"],
-        "description": data.get("description", ""),
+        "title": data["title"].strip(),
+        "description": data.get("description", "").strip(),
         "status": "pending",
         "created_at": datetime.now(timezone.utc).isoformat(),
     }
