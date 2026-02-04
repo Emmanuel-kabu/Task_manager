@@ -47,3 +47,22 @@ class TestCreateTask:
         assert response.status_code == 201
         data = response.get_json()
         assert data["description"] == "Chapter 5"
+
+    def test_create_task_missing_title(self, client):
+        """Creating a task without a title returns 400."""
+        tasks.clear()
+        response = client.post("/tasks", json={"description": "No title"})
+        assert response.status_code == 400
+        assert "error" in response.get_json()
+
+    def test_create_task_empty_title(self, client):
+        """Creating a task with an empty title returns 400."""
+        tasks.clear()
+        response = client.post("/tasks", json={"title": "   "})
+        assert response.status_code == 400
+
+    def test_create_task_no_body(self, client):
+        """Creating a task with no JSON body returns 400."""
+        tasks.clear()
+        response = client.post("/tasks", content_type="application/json")
+        assert response.status_code == 400
