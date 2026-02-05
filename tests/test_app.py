@@ -80,3 +80,15 @@ class TestGetTasks:
         response = client.get("/tasks")
         assert response.status_code == 200
         assert response.get_json() == []
+
+    def test_get_tasks_after_creation(self, client):
+        """After creating tasks, they all appear in the list."""
+        tasks.clear()
+        client.post("/tasks", json={"title": "Task 1"})
+        client.post("/tasks", json={"title": "Task 2"})
+        response = client.get("/tasks")
+        assert response.status_code == 200
+        data = response.get_json()
+        assert len(data) == 2
+        titles = {t["title"] for t in data}
+        assert titles == {"Task 1", "Task 2"}
