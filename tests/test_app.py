@@ -66,3 +66,17 @@ class TestCreateTask:
         tasks.clear()
         response = client.post("/tasks", content_type="application/json")
         assert response.status_code == 400
+
+
+# ── US2: View All Tasks ─────────────────────────────────────────
+
+
+class TestGetTasks:
+    """Tests for GET /tasks (US2)."""
+
+    def test_get_tasks_empty(self, client):
+        """When no tasks exist, returns an empty list."""
+        tasks.clear()
+        response = client.get("/tasks")
+        assert response.status_code == 200
+        assert response.get_json() == []
