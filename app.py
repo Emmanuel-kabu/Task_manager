@@ -44,5 +44,19 @@ def create_task():
     return jsonify(task), 201
 
 
+@app.route("/tasks", methods=["GET"])
+def get_tasks():
+    """
+    US2: View all tasks.
+
+    Role: As a user
+    Action: I want to view all my tasks in a list
+    Value: So that I can see everything on my plate at a glance
+
+    Returns: 200 OK with JSON array of all tasks.
+    """
+    return jsonify(list(tasks.values())), 200
+
+
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
