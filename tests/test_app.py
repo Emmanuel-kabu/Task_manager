@@ -92,3 +92,26 @@ class TestGetTasks:
         assert len(data) == 2
         titles = {t["title"] for t in data}
         assert titles == {"Task 1", "Task 2"}
+
+
+# ── US3: Update a Task ──────────────────────────────────────────
+
+
+class TestUpdateTask:
+    """Tests for PUT /tasks/<id> (US3)."""
+
+    def test_update_title(self, client):
+        """Updating the title works correctly."""
+        tasks.clear()
+        task = _create_task(client)
+        response = client.put(f"/tasks/{task['id']}", json={"title": "Updated"})
+        assert response.status_code == 200
+        assert response.get_json()["title"] == "Updated"
+
+    def test_update_status(self, client):
+        """Updating the status to a valid value works."""
+        tasks.clear()
+        task = _create_task(client)
+        response = client.put(f"/tasks/{task['id']}", json={"status": "done"})
+        assert response.status_code == 200
+        assert response.get_json()["status"] == "done"
