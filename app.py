@@ -93,6 +93,7 @@ def update_task(task_id):
             }), 400
         task["status"] = data["status"]
 
+    task["updated_at"] = datetime.now(timezone.utc).isoformat()
     tasks[task_id] = task
     return jsonify(task), 200
 
