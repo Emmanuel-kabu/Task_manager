@@ -135,3 +135,10 @@ class TestUpdateTask:
         task = _create_task(client)
         response = client.put(f"/tasks/{task['id']}", json={"title": "  "})
         assert response.status_code == 400
+
+    def test_update_adds_timestamp(self, client):
+        """Updating a task adds an updated_at timestamp."""
+        tasks.clear()
+        task = _create_task(client)
+        response = client.put(f"/tasks/{task['id']}", json={"title": "New"})
+        assert "updated_at" in response.get_json()
