@@ -86,6 +86,13 @@ def update_task(task_id):
     if "description" in data:
         task["description"] = data["description"].strip()
 
+    if "status" in data:
+        if data["status"] not in VALID_STATUSES:
+            return jsonify({
+                "error": f"Invalid status. Must be one of: {', '.join(sorted(VALID_STATUSES))}"
+            }), 400
+        task["status"] = data["status"]
+
     tasks[task_id] = task
     return jsonify(task), 200
 
