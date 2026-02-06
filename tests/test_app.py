@@ -115,3 +115,23 @@ class TestUpdateTask:
         response = client.put(f"/tasks/{task['id']}", json={"status": "done"})
         assert response.status_code == 200
         assert response.get_json()["status"] == "done"
+
+    def test_update_invalid_status(self, client):
+        """Updating with an invalid status returns 400."""
+        tasks.clear()
+        task = _create_task(client)
+        response = client.put(f"/tasks/{task['id']}", json={"status": "invalid"})
+        assert response.status_code == 400
+
+    def test_update_nonexistent_task(self, client):
+        """Updating a task that doesn\'t exist returns 404."""
+        tasks.clear()
+        response = client.put("/tasks/nonexistent", json={"title": "X"})
+        assert response.status_code == 404
+
+    def test_update_empty_title(self, client):
+        """Updating with an empty title returns 400."""
+        tasks.clear()
+        task = _create_task(client)
+        response = client.put(f"/tasks/{task['id']}", json={"title": "  "})
+        assert response.status_code == 400
