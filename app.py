@@ -58,5 +58,37 @@ def get_tasks():
     return jsonify(list(tasks.values())), 200
 
 
+@app.route("/tasks/<task_id>", methods=["PUT"])
+def update_task(task_id):
+    """
+    US3: Update an existing task.
+
+    Role: As a user
+    Action: I want to update a task's title, description, or status
+    Value: So that I can reflect changes or progress on my tasks
+
+    Returns: 200 OK with updated task, 404 if not found, 400 if invalid.
+    """
+    if task_id not in tasks:
+        return jsonify({"error": "Task not found"}), 404
+
+    data = request.get_json()
+    if not data:
+        return jsonify({"error": "No data provided"}), 400
+
+    task = tasks[task_id]
+
+    if "title" in data:
+        if not data["title"].strip():
+            return jsonify({"error": "Title cannot be empty"}), 400
+        task["title"] = data["title"].strip()
+
+    if "description" in data:
+        task["description"] = data["description"].strip()
+
+    tasks[task_id] = task
+    return jsonify(task), 200
+
+
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
