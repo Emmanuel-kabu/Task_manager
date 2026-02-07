@@ -34,3 +34,11 @@ The API will be available at `http://localhost:5000`.
 ```bash
 pytest tests/ -v
 ```
+
+## API Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/tasks` | Create a new task (US1) |
+| GET | `/tasks` | List all tasks (US2) |
+| PUT | `/tasks/<id>` | Update a task (US3) |
