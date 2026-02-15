@@ -107,6 +107,7 @@ def update_task(task_id):
 
     task["updated_at"] = datetime.now(timezone.utc).isoformat()
     tasks[task_id] = task
+    logger.info("PUT /tasks/%s — task updated", task_id)
     return jsonify(task), 200
 
 
