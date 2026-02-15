@@ -39,6 +39,7 @@ def create_task():
     data = request.get_json()
 
     if not data or "title" not in data or not data["title"].strip():
+        logger.warning("POST /tasks — rejected: missing or empty title")
         return jsonify({"error": "Title is required"}), 400
 
     task_id = str(uuid.uuid4())
@@ -50,6 +51,7 @@ def create_task():
         "created_at": datetime.now(timezone.utc).isoformat(),
     }
     tasks[task_id] = task
+    logger.info("POST /tasks — created task %s: '%s'", task_id, task["title"])
     return jsonify(task), 201
 
 
@@ -64,6 +66,7 @@ def get_tasks():
 
     Returns: 200 OK with JSON array of all tasks.
     """
+    logger.info("GET /tasks — returning %d tasks", len(tasks))
     return jsonify(list(tasks.values())), 200
 
 
