@@ -5,7 +5,16 @@ Built with Flask for the Agile & DevOps assessment.
 
 from flask import Flask, jsonify, request
 import uuid
+import logging
 from datetime import datetime, timezone
+
+# ── Logging Setup (Sprint 2 Retro Improvement #1) ───────────────
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
+logger = logging.getLogger("taskflow")
 
 app = Flask(__name__)
 
