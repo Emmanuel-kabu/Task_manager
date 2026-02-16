@@ -111,5 +111,24 @@ def update_task(task_id):
     return jsonify(task), 200
 
 
+
+@app.route("/tasks/<task_id>", methods=["DELETE"])
+def delete_task(task_id):
+    """
+    US4: Delete a task.
+
+    Role: As a user
+    Action: I want to delete a task by its ID
+    Value: So that I can remove items I no longer need to track
+
+    Returns: 200 OK with confirmation, or 404 if not found.
+    """
+    if task_id not in tasks:
+        return jsonify({"error": "Task not found"}), 404
+
+    deleted_title = tasks[task_id]["title"]
+    del tasks[task_id]
+    return jsonify({"message": f"Task '{deleted_title}' deleted successfully"}), 200
+
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
