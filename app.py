@@ -124,10 +124,12 @@ def delete_task(task_id):
     Returns: 200 OK with confirmation, or 404 if not found.
     """
     if task_id not in tasks:
+        logger.warning("DELETE /tasks/%s — not found", task_id)
         return jsonify({"error": "Task not found"}), 404
 
     deleted_title = tasks[task_id]["title"]
     del tasks[task_id]
+    logger.info("DELETE /tasks/%s — deleted task '%s'", task_id, deleted_title)
     return jsonify({"message": f"Task '{deleted_title}' deleted successfully"}), 200
 
 if __name__ == "__main__":
