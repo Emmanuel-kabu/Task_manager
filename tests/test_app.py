@@ -142,3 +142,24 @@ class TestUpdateTask:
         task = _create_task(client)
         response = client.put(f"/tasks/{task['id']}", json={"title": "New"})
         assert "updated_at" in response.get_json()
+
+
+# ── US4: Delete a Task ──────────────────────────────────────────
+
+
+class TestDeleteTask:
+    """Tests for DELETE /tasks/<id> (US4)."""
+
+    def test_delete_task_success(self, client):
+        """Deleting an existing task returns 200 and confirmation."""
+        task = _create_task(client, title="To delete")
+        response = client.delete(f"/tasks/{task['id']}")
+        assert response.status_code == 200
+        assert "deleted successfully" in response.get_json()["message"]
+
+    def test_delete_task_removes_from_list(self, client):
+        """After deletion, the task no longer appears in GET /tasks."""
+        task = _create_task(client, title="Temporary")
+        client.delete(f"/tasks/{task['id']}")
+        response = client.get("/tasks")
+        assert len(response.get_json()) == 0
