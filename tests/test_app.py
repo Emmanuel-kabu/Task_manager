@@ -163,3 +163,9 @@ class TestDeleteTask:
         client.delete(f"/tasks/{task['id']}")
         response = client.get("/tasks")
         assert len(response.get_json()) == 0
+
+    def test_delete_nonexistent_task(self, client):
+        """Deleting a non-existent task returns 404."""
+        response = client.delete("/tasks/nonexistent-id")
+        assert response.status_code == 404
+        assert "error" in response.get_json()
