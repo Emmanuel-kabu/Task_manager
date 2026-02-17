@@ -21,6 +21,7 @@ app = Flask(__name__)
 # In-memory task storage
 tasks = {}
 
+# Valid task statuses for creation, update, and filtering
 VALID_STATUSES = {"pending", "in-progress", "done"}
 
 
