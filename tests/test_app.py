@@ -197,3 +197,16 @@ class TestFilterTasks:
         response = client.get("/tasks?status=pending")
         assert response.status_code == 200
         assert len(response.get_json()) == 2
+
+    def test_filter_invalid_status(self, client):
+        """Filtering by an invalid status returns 400."""
+        response = client.get("/tasks?status=banana")
+        assert response.status_code == 400
+        assert "error" in response.get_json()
+
+    def test_filter_returns_empty_when_no_match(self, client):
+        """Filtering returns an empty list when no tasks match."""
+        _create_task(client, title="Pending one")
+        response = client.get("/tasks?status=done")
+        assert response.status_code == 200
+        assert response.get_json() == []
