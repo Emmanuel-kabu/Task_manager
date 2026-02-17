@@ -58,16 +58,30 @@ def create_task():
 @app.route("/tasks", methods=["GET"])
 def get_tasks():
     """
-    US2: View all tasks.
+    US2: View all tasks. US5: Filter by status.
 
     Role: As a user
-    Action: I want to view all my tasks in a list
-    Value: So that I can see everything on my plate at a glance
+    Action: I want to view all my tasks, optionally filtered by status
+    Value: So that I can see everything or focus on what matters
 
-    Returns: 200 OK with JSON array of all tasks.
+    Query params: ?status=pending|in-progress|done
+    Returns: 200 OK with JSON array of tasks.
     """
+    status_filter = request.args.get("status")
+
+    if status_filter:
+        if status_filter not in VALID_STATUSES:
+            logger.warning("GET /tasks — rejected: invalid status filter '%s'", status_filter)
+            return jsonify({
+                "error": f"Invalid status filter. Must be one of: {', '.join(sorted(VALID_STATUSES))}"
+            }), 400
+        filtered = [t for t in tasks.values() if t["status"] == status_filter]
+        logger.info("GET /tasks?status=%s — returning %d tasks", status_filter, len(filtered))
+        return jsonify(filtered), 200
+
     logger.info("GET /tasks — returning %d tasks", len(tasks))
     return jsonify(list(tasks.values())), 200
+
 
 
 @app.route("/tasks/<task_id>", methods=["PUT"])
