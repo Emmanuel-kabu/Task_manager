@@ -169,3 +169,31 @@ class TestDeleteTask:
         response = client.delete("/tasks/nonexistent-id")
         assert response.status_code == 404
         assert "error" in response.get_json()
+
+
+# ── US5: Filter Tasks by Status ─────────────────────────────────
+
+
+class TestFilterTasks:
+    """Tests for GET /tasks?status=<status> (US5)."""
+
+    def test_filter_by_status(self, client):
+        """Filtering returns only tasks with the matching status."""
+        _create_task(client, title="Pending task")
+        task2 = _create_task(client, title="Done task")
+        # Mark task2 as done
+        client.put(f"/tasks/{task2['id']}", json={"status": "done"})
+
+        response = client.get("/tasks?status=done")
+        assert response.status_code == 200
+        data = response.get_json()
+        assert len(data) == 1
+        assert data[0]["title"] == "Done task"
+
+    def test_filter_pending(self, client):
+        """Filtering by 'pending' returns only pending tasks."""
+        _create_task(client, title="Task A")
+        _create_task(client, title="Task B")
+        response = client.get("/tasks?status=pending")
+        assert response.status_code == 200
+        assert len(response.get_json()) == 2
