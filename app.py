@@ -147,5 +147,23 @@ def delete_task(task_id):
     logger.info("DELETE /tasks/%s — deleted task '%s'", task_id, deleted_title)
     return jsonify({"message": f"Task '{deleted_title}' deleted successfully"}), 200
 
+
+@app.route("/health", methods=["GET"])
+def health_check():
+    """
+    US6: Health check endpoint.
+
+    Role: As a user (or operations team)
+    Action: I want to check if the service is running
+    Value: So that I can verify the API is healthy before making requests
+
+    Returns: 200 OK with health status, timestamp, and task count.
+    """
+    return jsonify({
+        "status": "healthy",
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "task_count": len(tasks),
+    }), 200
+
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
