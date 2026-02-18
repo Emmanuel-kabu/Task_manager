@@ -167,4 +167,5 @@ def health_check():
     }), 200
 
 if __name__ == "__main__":
+    logger.info("Starting TaskFlow API on port 5000")
     app.run(debug=True, port=5000)
