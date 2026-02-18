@@ -210,3 +210,25 @@ class TestFilterTasks:
         response = client.get("/tasks?status=done")
         assert response.status_code == 200
         assert response.get_json() == []
+
+
+# ── US6: Health Check ────────────────────────────────────────────
+
+
+class TestHealthCheck:
+    """Tests for GET /health (US6)."""
+
+    def test_health_check(self, client):
+        """Health endpoint returns 200 with status and timestamp."""
+        response = client.get("/health")
+        assert response.status_code == 200
+        data = response.get_json()
+        assert data["status"] == "healthy"
+        assert "timestamp" in data
+
+    def test_health_check_includes_task_count(self, client):
+        """Health endpoint includes the current task count."""
+        _create_task(client, title="A task")
+        response = client.get("/health")
+        data = response.get_json()
+        assert data["task_count"] == 1
