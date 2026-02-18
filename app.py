@@ -159,6 +159,7 @@ def health_check():
 
     Returns: 200 OK with health status, timestamp, and task count.
     """
+    logger.info("GET /health — service is healthy")
     return jsonify({
         "status": "healthy",
         "timestamp": datetime.now(timezone.utc).isoformat(),
